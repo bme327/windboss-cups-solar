@@ -39,7 +39,7 @@ void calculateRPS(uint32_t period)
 	long diff = g_data.Pulses - g_data.LastPulses;
 	if ( diff < 0 )
 	{	// handle overflow of counter
-		diff = 65536 - g_data.LastPulses + g_data.Pulses;
+		diff = 65535 - g_data.LastPulses + g_data.Pulses;
 	}
 	const float K_ANEMO = 1; // since circle length is 0.38 and K is 2.4 ~ 1
 	float time = (float)period;
@@ -53,11 +53,6 @@ void calculateRPS(uint32_t period)
 	g_data.counter++;
 }
 
-void aggregateRPS()
-{
-	g_data.RPSAvg /= g_data.counter;
-}
-
 
 void getAndCalculateDirection() {
 
@@ -65,16 +60,19 @@ void getAndCalculateDirection() {
     const float DIR_FILTER = 0.9;
 
     dir += g_Settings.WindDirOffset;
-	if ( dir > 360 )
-		dir -= 360;
+	if ( dir > 360.0 )
+		dir -= 360.0;
 	if ( dir < 0 )
-		dir += 360;
+		dir += 360.0;
+
+	if ( g_Settings.InverseWindDir == 1)
+		dir = 360 - dir;
 
     if ( dir < g_data.minDir)
         g_data.minDir = dir;
     if ( dir > g_data.maxDir)
         g_data.maxDir = dir;
-    g_data.directionAngle = dir;
+    g_data.directionAngle = (int)dir;
     //average of direction via vector
     float ang = M_PI * dir / 180;
     float x = cos(ang);
@@ -82,11 +80,13 @@ void getAndCalculateDirection() {
     g_data.xAvg = (x + DIR_FILTER * g_data.xAvg)/(1.0 + DIR_FILTER);
     g_data.yAvg = (y + DIR_FILTER * g_data.yAvg)/(1.0 + DIR_FILTER);
 
-    g_data.directionAngleAvg = atan2(g_data.yAvg, g_data.xAvg) * 180 / M_PI;
+    g_data.directionAngleAvg = (int)(atan2(g_data.yAvg, g_data.xAvg) * 180 / M_PI);
     if ( g_data.directionAngleAvg < 0 )
     {
         g_data.directionAngleAvg = 360 + g_data.directionAngleAvg;
     }
+
+    g_data.directionAngleAvg = g_data.directionAngleAvg % 360;
 
 }
 
@@ -149,13 +149,6 @@ float calculateAngle(uint16_t val){
     float A = (val & 0x1FF0) >> 4;
     A += (float)(val & 0x000F) / 16.0;
 
-    A -= SOUTH;
-    if ( A <= 0 )
-    	A = 360 + A;
-    // N->S inverse
-    A = A + 180;
-    if ( A >= 360 )
-    	A -= 360;
     return A;
 }
 

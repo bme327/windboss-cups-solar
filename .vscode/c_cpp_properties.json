@@ -1,0 +1,28 @@
+{
+    "version": 4,
+    "configurations": [
+        {
+            "name": "STM32L051",
+            "compilerPath": "C:/ST/STM32CubeIDE_2.2.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.14.3.rel1.win32_1.0.100.202602081740/tools/bin/arm-none-eabi-gcc.exe",
+            "compilerArgs": [
+                "-mcpu=cortex-m0plus",
+                "-mthumb",
+                "-mfloat-abi=soft"
+            ],
+            "intelliSenseMode": "gcc-arm",
+            "cStandard": "gnu11",
+            "defines": [
+                "USE_HAL_DRIVER",
+                "STM32L051xx",
+                "DEBUG"
+            ],
+            "includePath": [
+                "${workspaceFolder}/Core/Inc",
+                "${workspaceFolder}/Drivers/STM32L0xx_HAL_Driver/Inc",
+                "${workspaceFolder}/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy",
+                "${workspaceFolder}/Drivers/CMSIS/Device/ST/STM32L0xx/Include",
+                "${workspaceFolder}/Drivers/CMSIS/Include"
+            ]
+        }
+    ]
+}

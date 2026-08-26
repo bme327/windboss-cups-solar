@@ -1,0 +1,78 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug (ST-Link, cppdbg)",
+            "type": "cppdbg",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "program": "${workspaceFolder}/build/windboss-l051-turbine.elf",
+            "MIMode": "gdb",
+            "targetArchitecture": "arm",
+            "miDebuggerPath": "C:/ST/STM32CubeIDE_2.2.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.14.3.rel1.win32_1.0.100.202602081740/tools/bin/arm-none-eabi-gdb.exe",
+            "debugServerPath": "C:/ST/STM32CubeIDE_2.2.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.openocd.win32_2.4.500.202604080855/tools/bin/openocd.exe",
+            "debugServerArgs": "-s C:/ST/STM32CubeIDE_2.2.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.debug.openocd_2.3.400.202606220929/resources/openocd/st_scripts -s ${workspaceFolder} -f windboss-l051-turbine.cfg",
+            "serverStarted": "Listening on port \\d+ for gdb connections",
+            "filterStderr": true,
+            "filterStdout": false,
+            "stopAtConnect": true,
+            "preLaunchTask": "Build",
+            "logging": { "engineLogging": true, "trace": true, "traceResponse": true },
+            "miDebuggerServerAddress": "localhost:3333",
+            "postRemoteConnectCommands": [
+                {
+                    "text": "monitor reset halt"
+                },
+                {
+                    "text": "load"
+                },
+                {
+                    "text": "monitor reset halt"
+                }
+            ]
+        },
+        {
+            "name": "Attach (ST-Link, cppdbg)",
+            "type": "cppdbg",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "program": "${workspaceFolder}/build/windboss-l051-turbine.elf",
+            "MIMode": "gdb",
+            "targetArchitecture": "arm",
+            "miDebuggerPath": "C:/ST/STM32CubeIDE_2.2.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.14.3.rel1.win32_1.0.100.202602081740/tools/bin/arm-none-eabi-gdb.exe",
+            "debugServerPath": "C:/ST/STM32CubeIDE_2.2.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.openocd.win32_2.4.500.202604080855/tools/bin/openocd.exe",
+            "debugServerArgs": "-s C:/ST/STM32CubeIDE_2.2.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.debug.openocd_2.3.400.202606220929/resources/openocd/st_scripts -s ${workspaceFolder} -f windboss-l051-turbine.cfg",
+            "serverStarted": "Listening on port \\d+ for gdb connections",
+            "filterStderr": true,
+            "filterStdout": false,
+            "stopAtConnect": true,
+            "miDebuggerServerAddress": "localhost:3333",
+            "postRemoteConnectCommands": [
+                {
+                    "text": "monitor halt"
+                }
+            ]
+        },
+        {
+            "name": "Debug (cortex-debug, needs marus25.cortex-debug)",
+            "type": "cortex-debug",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "executable": "${workspaceFolder}/build/windboss-l051-turbine.elf",
+            "servertype": "openocd",
+            "device": "STM32L051K8Tx",
+            "interface": "swd",
+            "runToEntryPoint": "main",
+            "preLaunchTask": "Build",
+            "serverpath": "C:/ST/STM32CubeIDE_2.2.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.openocd.win32_2.4.500.202604080855/tools/bin/openocd.exe",
+            "gdbPath": "C:/ST/STM32CubeIDE_2.2.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.14.3.rel1.win32_1.0.100.202602081740/tools/bin/arm-none-eabi-gdb.exe",
+            "searchDir": [
+                "C:/ST/STM32CubeIDE_2.2.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.debug.openocd_2.3.400.202606220929/resources/openocd/st_scripts",
+                "${workspaceFolder}"
+            ],
+            "configFiles": [
+                "windboss-l051-turbine.cfg"
+            ]
+        }
+    ]
+}

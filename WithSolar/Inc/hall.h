@@ -36,7 +36,6 @@
 #define HALL_PRI_ADDR ( 0x35 << 1 )
 #define HALL_SEC_ADDR ( 0x37 << 1 )
 
-#define SOUTH 64
 
 #define TS0 25
 #define TADC0 17508
@@ -51,7 +50,7 @@ extern uint32_t g_i2cError;
 
 typedef struct windData {
     float directionAngle;
-    float directionAngleAvg;
+    int directionAngleAvg;
     float RPS;
     float RPSAvg;
     float RPSGust;
@@ -88,7 +87,6 @@ windData_t* getWindData();
 HAL_I2C_StateTypeDef getI2CStatus();
 void getAndCalculateDirection();
 void calculateRPS(uint32_t period);
-void aggregateRPS();
 
 
 #endif

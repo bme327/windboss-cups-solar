@@ -199,8 +199,7 @@ static void MX_ADC_Init(void)
   hadc.Init.OversamplingMode = DISABLE;
   hadc.Init.ClockPrescaler = ADC_CLOCK_ASYNC_DIV1;
   hadc.Init.Resolution = ADC_RESOLUTION_12B;
-  // VREFINT needs >=10us sampling and the 1:4 divider is a weak source; 3.5 cycles is only 0.875us at 4MHz
-  hadc.Init.SamplingTime = ADC_SAMPLETIME_160CYCLES_5;
+  hadc.Init.SamplingTime = ADC_SAMPLETIME_3CYCLES_5;
   hadc.Init.ScanConvMode = ADC_SCAN_DIRECTION_FORWARD;
   hadc.Init.DataAlign = ADC_DATAALIGN_RIGHT;
   hadc.Init.ContinuousConvMode = DISABLE;

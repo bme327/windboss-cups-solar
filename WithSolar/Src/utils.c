@@ -38,35 +38,6 @@ char nibbleToChar(short int  byte) {
     return (byte < 10) ? byte + '0' : byte - 10 + 'A';
 }
 
-#define IWDG_KEY_RELOAD_CMD    0x0000AAAAU
-#define IWDG_KEY_ENABLE_CMD    0x0000CCCCU
-#define IWDG_KEY_WRITE_ACCESS  0x00005555U
-#define IWDG_PRESCALER_DIV256  0x00000006U
-
-/// @brief Starts the independent watchdog, register level (HAL IWDG module is not built in this project)
-void watchdogInit(void)
-{
-#ifndef WATCHDOG_DISABLED
-	// LSI ~37 kHz / 256 -> ~6.9 ms per tick, 4095 ticks -> ~28 s timeout
-	IWDG->KR = IWDG_KEY_ENABLE_CMD;
-	IWDG->KR = IWDG_KEY_WRITE_ACCESS;
-	IWDG->PR = IWDG_PRESCALER_DIV256;
-	IWDG->RLR = 0x0FFFU;
-	while (IWDG->SR != 0U)
-	{
-	}
-	IWDG->KR = IWDG_KEY_RELOAD_CMD;
-#endif
-}
-
-/// @brief Kicks the watchdog, safe to call when the watchdog was never started
-void watchdogRefresh(void)
-{
-#ifndef WATCHDOG_DISABLED
-	IWDG->KR = IWDG_KEY_RELOAD_CMD;
-#endif
-}
-
 void Delay_Micro(uint32_t period)
 {
 	  __IO uint32_t waitLoopIndex = (period * (SystemCoreClock / 1000000U));
