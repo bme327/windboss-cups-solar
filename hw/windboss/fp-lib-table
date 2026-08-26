@@ -1,0 +1,4 @@
+(fp_lib_table
+  (version 7)
+  (lib (name "windboss-pll")(type "KiCad")(uri "${KIPRJMOD}/windboss.pretty/windboss-pll.pretty")(options "")(descr ""))
+)
