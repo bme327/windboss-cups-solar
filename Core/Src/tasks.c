@@ -169,10 +169,14 @@ void prepareAndSendLora()
 	g_data.Solar /= g_data.counter;
 	CayenneLppReset();
 	int channel = 0;
-	CayenneLppAddDigitalInput(channel++, 100 ); 							// protocol version 1.00
-	CayenneLppAddAnalogInput( channel++, roundRadix(g_data.RPSAvg,1) );
-	CayenneLppAddAnalogInput( channel++, roundRadix(g_data.RPSGust,1) );
-	CayenneLppAddAnalogInput( channel++, roundRadix(g_data.directionAngleAvg,0) );
+	CayenneLppAddDigitalInput(channel++, 101 ); 							// protocol version 1.01
+	// 2 decimals matches the analog field resolution; at 1 decimal a light-wind average
+	// over ~60 measure cycles collapses to 0.0
+	CayenneLppAddAnalogInput( channel++, roundRadix(g_data.RPSAvg,2) );
+	CayenneLppAddAnalogInput( channel++, roundRadix(g_data.RPSGust,2) );
+	// analog input is int16 x0.01 and saturates at 327.67, so direction is pre-scaled:
+	// the raw field carries whole degrees, decoder multiplies analog_in_3 by 100
+	CayenneLppAddAnalogInput( channel++, (lround(g_data.directionAngleAvg) % 360) / 100.0f );
 	CayenneLppAddRelativeHumidity(channel++, roundRadix(g_data.Humidity,0));
 	CayenneLppAddTemperature( channel++, roundRadix(g_data.Temperature,1) );
 	CayenneLppAddBarometricPressure( channel++, roundRadix(g_data.Pressure,1));

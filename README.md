@@ -38,6 +38,11 @@ Protocol** payload — protocol version, average wind speed, gust, average
 direction, humidity, temperature, pressure, battery and solar level — then
 hex-encoded and handed to the radio as a confirmed uplink.
 
+Direction stays on channel 3 as an analog input, but that LPP type is a signed
+16-bit field scaled by 0.01, so it only reaches 327.67 and angles above that
+wrapped negative. The value is now pre-scaled: the raw field holds whole
+degrees, so the decoder multiplies `analog_in_3` by 100.
+
 The radio is a **Seeed LoRa-E5** module driven over UART with AT commands. It
 joins using OTAA on the EU868 band with adaptive data rate enabled, and is
 returned to low-power mode between transmissions.

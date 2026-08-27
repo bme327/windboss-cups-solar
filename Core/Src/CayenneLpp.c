@@ -20,6 +20,7 @@
  */
 #include <stdint.h>
 #include <string.h>
+#include <math.h>
 
 //#include "utilities.h"
 #include "CayenneLpp.h"
@@ -91,7 +92,7 @@ uint8_t CayenneLppAddAnalogInput( uint8_t channel, float value )
         return 0;
     }
 
-    int16_t val = ( int16_t ) ( value * 100 );
+    int16_t val = ( int16_t ) lroundf( value * 100.0f );
     CayenneLppBuffer[CayenneLppCursor++] = channel; 
     CayenneLppBuffer[CayenneLppCursor++] = LPP_ANALOG_INPUT; 
     CayenneLppBuffer[CayenneLppCursor++] = val >> 8; 
